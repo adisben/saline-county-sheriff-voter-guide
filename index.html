@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saline County Sheriff Voter Guide — 2026 Runoff</title>
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text-muted: #5a5a7a;
+    --border: #e0e2ea;
+    --accent: #2d5aa0;
+    --accent-light: #e8eef7;
+    --robertson: #1b6b93;
+    --friend: #8b5e3c;
+    --scale-1: #1565c0;
+    --scale-2: #42a5f5;
+    --scale-3: #80cbc4;
+    --scale-4: #9e9e9e;
+    --scale-5: #e6a57a;
+    --scale-6: #e57373;
+    --scale-7: #c62828;
+    --warning: #f59e0b;
+    --danger: #dc2626;
+    --success: #16a34a;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Header */
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #2d3a6a 100%); color: white; padding: 2rem 1.5rem; text-align: center; }
+  .header h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
+  .header .subtitle { font-size: 1rem; opacity: 0.85; }
+  .header .election-date { display: inline-block; margin-top: 0.8rem; background: rgba(255,255,255,0.15); padding: 0.4rem 1.2rem; border-radius: 20px; font-weight: 600; font-size: 0.95rem; }
+  .header .structural { margin-top: 0.6rem; font-size: 0.85rem; opacity: 0.75; }
+
+  /* Tabs */
+  .tabs { display: flex; flex-wrap: wrap; background: var(--card); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+  .tab { padding: 0.8rem 1.2rem; cursor: pointer; font-weight: 500; font-size: 0.9rem; color: var(--text-muted); border-bottom: 3px solid transparent; transition: all 0.2s; flex: 1; text-align: center; min-width: 100px; }
+  .tab:hover { color: var(--accent); background: var(--accent-light); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  /* Content */
+  .content { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Cards */
+  .card { background: var(--card); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.2rem; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  .card h2 { font-size: 1.3rem; margin-bottom: 1rem; color: var(--text); }
+  .card h3 { font-size: 1.1rem; margin-bottom: 0.6rem; color: var(--text); }
+
+  /* Grid layouts */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* Callout */
+  .callout { padding: 1rem 1.2rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
+  .callout-info { background: #e8eef7; border-left: 4px solid var(--accent); }
+  .callout-warn { background: #fef3cd; border-left: 4px solid var(--warning); }
+  .callout-red { background: #fde8e8; border-left: 4px solid var(--danger); }
+
+  /* Bar chart */
+  .bar-chart { margin: 1rem 0; }
+  .bar-row { display: flex; align-items: center; margin-bottom: 0.6rem; }
+  .bar-label { width: 160px; font-size: 0.85rem; font-weight: 500; flex-shrink: 0; }
+  .bar-track { flex: 1; background: #eee; border-radius: 6px; height: 28px; position: relative; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 10px; color: white; font-size: 0.8rem; font-weight: 600; transition: width 0.8s ease; }
+  .bar-fill.robertson { background: var(--robertson); }
+  .bar-fill.friend { background: var(--friend); }
+  .bar-fill.washington { background: #6b7280; }
+  .bar-fill.goshien { background: #9ca3af; }
+
+  /* Candidate cards */
+  .candidate-card { border-top: 4px solid; }
+  .candidate-card.robertson { border-top-color: var(--robertson); }
+  .candidate-card.friend { border-top-color: var(--friend); }
+  .candidate-name { font-size: 1.4rem; font-weight: 700; }
+  .candidate-name.robertson { color: var(--robertson); }
+  .candidate-name.friend { color: var(--friend); }
+  .candidate-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem; }
+  .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin: 0.15rem; }
+  .badge-blue { background: #dbeafe; color: #1e40af; }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-gray { background: #f3f4f6; color: #374151; }
+  .badge-orange { background: #ffedd5; color: #9a3412; }
+
+  /* Accordion */
+  .accordion { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
+  .accordion-header { padding: 0.8rem 1rem; cursor: pointer; font-weight: 600; font-size: 0.9rem; background: #fafbfc; display: flex; justify-content: space-between; align-items: center; }
+  .accordion-header:hover { background: var(--accent-light); }
+  .accordion-header::after { content: '+'; font-size: 1.2rem; color: var(--text-muted); transition: transform 0.2s; }
+  .accordion.open .accordion-header::after { content: '−'; }
+  .accordion-body { padding: 0 1rem; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+  .accordion.open .accordion-body { max-height: 2000px; padding: 0.8rem 1rem; }
+
+  /* Partisan Scale */
+  .scale-row { display: flex; align-items: center; margin-bottom: 1rem; padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; }
+  .scale-issue { width: 140px; font-size: 0.85rem; font-weight: 600; flex-shrink: 0; }
+  .scale-track { flex: 1; height: 32px; background: linear-gradient(to right, var(--scale-1), var(--scale-3), var(--scale-4), var(--scale-5), var(--scale-7)); border-radius: 16px; position: relative; margin: 0 0.5rem; opacity: 0.2; }
+  .scale-container { flex: 1; position: relative; margin: 0 0.5rem; }
+  .scale-bg { height: 8px; background: linear-gradient(to right, #1565c0, #42a5f5, #80cbc4, #bdbdbd, #e6a57a, #e57373, #c62828); border-radius: 4px; position: relative; }
+  .scale-labels { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--text-muted); margin-top: 2px; }
+  .scale-dot { position: absolute; width: 20px; height: 20px; border-radius: 50%; top: 50%; transform: translate(-50%, -50%); border: 3px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.3); z-index: 2; }
+  .scale-dot.robertson { background: var(--robertson); }
+  .scale-dot.friend { background: var(--friend); }
+  .scale-detail { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+  /* Comparison table */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .cmp-table th { background: #f8f9fb; padding: 0.7rem; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); }
+  .cmp-table td { padding: 0.7rem; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  .cmp-table tr:hover td { background: #fafbfc; }
+  .col-robertson { border-left: 3px solid var(--robertson); }
+  .col-friend { border-left: 3px solid var(--friend); }
+
+  /* Funding bars */
+  .fund-row { display: flex; align-items: center; margin-bottom: 0.8rem; }
+  .fund-label { width: 120px; font-size: 0.8rem; font-weight: 500; }
+  .fund-bars { flex: 1; display: flex; gap: 4px; align-items: center; }
+  .fund-bar { height: 24px; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; color: white; font-size: 0.75rem; font-weight: 600; min-width: 40px; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .timeline-item { position: relative; margin-bottom: 1.2rem; }
+  .timeline-item::before { content: ''; position: absolute; left: -1.65rem; top: 0.4rem; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid white; box-shadow: 0 0 0 2px var(--accent); }
+  .timeline-date { font-size: 0.8rem; font-weight: 600; color: var(--accent); }
+  .timeline-text { font-size: 0.85rem; margin-top: 0.2rem; }
+
+  /* Controversy cards */
+  .controversy-card { border-left: 4px solid var(--warning); padding: 1rem; margin-bottom: 1rem; background: #fffbf0; border-radius: 0 8px 8px 0; }
+  .controversy-card h4 { margin-bottom: 0.4rem; }
+  .controversy-status { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-top: 0.3rem; }
+  .status-pending { background: #fef3cd; color: #92400e; }
+  .status-dismissed { background: #dcfce7; color: #166534; }
+  .status-dispute { background: #e0e7ff; color: #3730a3; }
+  .context-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic; border-top: 1px solid #eee; padding-top: 0.5rem; }
+
+  /* Sources table */
+  .src-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .src-table th { background: #f8f9fb; padding: 0.5rem; text-align: left; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
+  .src-table td { padding: 0.5rem; border-bottom: 1px solid #f0f0f0; }
+  .src-type { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.7rem; background: #f3f4f6; color: #374151; }
+
+  /* Legend */
+  .legend { display: flex; gap: 1.5rem; margin-bottom: 1rem; font-size: 0.85rem; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+  /* Voting info */
+  .voting-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 1rem; font-size: 0.88rem; }
+  .voting-grid dt { font-weight: 600; }
+
+  ul { padding-left: 1.2rem; }
+  li { margin-bottom: 0.3rem; font-size: 0.88rem; }
+
+  .disclaimer { text-align: center; font-size: 0.8rem; color: var(--text-muted); padding: 2rem 1rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>Saline County Sheriff</h1>
+  <div class="subtitle">Republican Primary Runoff &mdash; Voter Guide</div>
+  <div class="election-date">Election Day: March 31, 2026</div>
+  <div class="structural">Open Seat &bull; No Democratic Candidate &bull; Runoff Winner Becomes Sheriff</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" data-tab="overview">Overview</div>
+  <div class="tab" data-tab="candidates">Candidates</div>
+  <div class="tab" data-tab="compare">Compare</div>
+  <div class="tab" data-tab="funding">Funding</div>
+  <div class="tab" data-tab="controversies">Controversies</div>
+  <div class="tab" data-tab="sources">Sources</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- ==================== OVERVIEW ==================== -->
+<div class="tab-content active" id="overview">
+
+  <div class="card">
+    <h2>Race Summary</h2>
+    <p>Incumbent Sheriff <strong>Rodney Wright</strong> is not seeking reelection (running for State Senate District 16). This is the first open Saline County Sheriff seat since 2014. No Democrat filed, making this Republican runoff the <strong>decisive election</strong>.</p>
+    <p style="margin-top:0.5rem;">Four Republicans ran in the March 3 primary. None cleared 50%+1, triggering a runoff between the top two finishers.</p>
+  </div>
+
+  <div class="card">
+    <h2>Primary Results &mdash; March 3, 2026</h2>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">Dustin Robertson</div>
+        <div class="bar-track"><div class="bar-fill robertson" style="width:37.3%">37.3% (5,066)</div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Richard Friend</div>
+        <div class="bar-track"><div class="bar-fill friend" style="width:32.85%">32.9% (4,462)</div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Aaron Washington</div>
+        <div class="bar-track"><div class="bar-fill washington" style="width:21.17%">21.2% (2,876)</div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Rodney Goshien</div>
+        <div class="bar-track"><div class="bar-fill goshien" style="width:8.68%">8.7% (1,179)</div></div>
+      </div>
+    </div>
+    <p style="font-size:0.82rem; color:var(--text-muted);">Neither eliminated candidate has endorsed a runoff candidate as of March 28, 2026.</p>
+  </div>
+
+  <div class="callout callout-warn">
+    <strong>Voter Eligibility:</strong> Only voters who participated in the Republican primary (or did not vote in any primary) may vote in this runoff. Democratic primary voters are ineligible.
+  </div>
+
+  <div class="card">
+    <h2>Voting Information</h2>
+    <dl class="voting-grid">
+      <dt>Early Voting</dt><dd>March 24&ndash;27 &amp; March 30, 8:00 AM &ndash; 4:30 PM</dd>
+      <dt>Election Day</dt><dd>March 31, 7:30 AM &ndash; 7:30 PM</dd>
+    </dl>
+    <h3 style="margin-top:1rem;">Vote Center Locations <span style="font-weight:normal; font-size:0.8rem; color:var(--text-muted);">(vote at any location)</span></h3>
+    <ul style="margin-top:0.5rem;">
+      <li>Benton Vote Center &mdash; 221 N. Main St., Benton</li>
+      <li>First Baptist Church Bryant &mdash; 6715 Highway 5, Bryant</li>
+      <li>Owensville Baptist Church &mdash; 22000 AR-5, Lonsdale</li>
+      <li>East End Baptist Church &mdash; 4701 East End Rd, Hensley</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Open Questions for Voters</h2>
+    <ul>
+      <li><strong>Defamation lawsuit outcome</strong> &mdash; Allegations against Friend are serious but unproven in court. No findings of fact have been made.</li>
+      <li><strong>Updated campaign finance</strong> &mdash; Pre-runoff filings (due ~March 24) not yet publicly accessible. Financial dynamics may have shifted.</li>
+      <li><strong>Washington's 2,876 voters</strong> &mdash; Where the third-place finisher's supporters go could decide the runoff. No endorsement issued.</li>
+      <li><strong>Friend's restructuring specifics</strong> &mdash; Says department is "too top heavy" but hasn't detailed which positions would be cut.</li>
+      <li><strong>Robertson's distance from social media attacks</strong> &mdash; States his brother-in-law "acted independently." Voters may weigh whether further public response is warranted.</li>
+      <li><strong>Boys on the Tracks file review</strong> &mdash; AR Division of LE Standards said it would review. No outcome reported.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== CANDIDATES ==================== -->
+<div class="tab-content" id="candidates">
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--robertson)"></div> Dustin Robertson</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--friend)"></div> Richard Friend</div>
+  </div>
+
+  <div class="grid-2">
+
+    <!-- ROBERTSON -->
+    <div class="card candidate-card robertson">
+      <div class="candidate-name robertson">Dustin Robertson</div>
+      <div class="candidate-meta">Republican &bull; Chief Deputy, Saline County Sheriff's Office &bull; Benton, AR</div>
+
+      <div class="accordion">
+        <div class="accordion-header">Biography</div>
+        <div class="accordion-body">
+          <p>35-year law enforcement veteran. Spent 31 years with the Little Rock Police Department, rising from patrol officer to Major. Retired from LRPD ~4 years ago to become Chief Deputy at the Saline County Sheriff's Office. FBI National Academy graduate. 30-year Saline County resident.</p>
+          <p style="margin-top:0.5rem; font-size:0.82rem; color:var(--text-muted);">Married to Lonya (29 years). Two adult children (Peyton and Keeli) who are educators/coaches in Saline County. Member of Northside Church of Christ.</p>
+          <p style="margin-top:0.3rem; font-size:0.78rem;"><a href="https://dustinrobertsonforsheriff.com/">Campaign website</a> &bull; <a href="https://www.mysaline.com/2026-elections-campaign-dustin-robertson-for-sheriff/">MySaline announcement</a></p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1rem;">Top Priorities</h3>
+      <ol style="padding-left:1.2rem;">
+        <li><strong>Accessibility &amp; accountability</strong> &mdash; direct citizen access to sheriff <small>(<a href="https://www.thv11.com/article/news/local/saline-county-sheriff-candidates/91-6be87e70-5aab-4559-b074-0bf9e0be6571">THV11</a>)</small></li>
+        <li><strong>Continuity</strong> with Sheriff Wright's direction <small>(<a href="https://www.mysaline.com/2026-elections-campaign-dustin-robertson-for-sheriff/">MySaline</a>)</small></li>
+        <li><strong>Technology advancement</strong> &mdash; rapid DNA ($1M grant) <small>(<a href="https://www.bentoncourier.com/news/sheriff-s-candidates-address-allegations-policy-questions-during-debate/article_29196acb-9d22-4375-9307-09b990fc6893.html">Benton Courier</a>)</small></li>
+      </ol>
+
+      <h3 style="margin-top:1rem;">Record Highlights</h3>
+      <ul>
+        <li>Rose to <strong>Major</strong> at LRPD (one of AR's largest departments)</li>
+        <li>Founded LRPD's first <strong>Gang Unit</strong></li>
+        <li>Commanded <strong>SWAT</strong> and <strong>Crisis Negotiation</strong> teams</li>
+        <li>Created <strong>School Resource Officer</strong> program at LRPD</li>
+        <li>As Chief Deputy: <strong>1,500+ FOIA requests</strong>, zero litigation</li>
+        <li><strong>FBI National Academy</strong> graduate</li>
+      </ul>
+
+      <h3 style="margin-top:1rem;">Endorsements</h3>
+      <div>
+        <span class="badge badge-blue">Sheriff Rodney Wright</span>
+        <span class="badge badge-blue">AG Tim Griffin (R)</span>
+        <span class="badge badge-blue">Rep. RJ Hawk (R)</span>
+        <span class="badge badge-green">FOP Lodge 63</span>
+        <span class="badge badge-green">IAFF Local 2765</span>
+        <span class="badge badge-orange">Saline County GOP PAC</span>
+      </div>
+    </div>
+
+    <!-- FRIEND -->
+    <div class="card candidate-card friend">
+      <div class="candidate-name friend">Richard Friend</div>
+      <div class="candidate-meta">Republican &bull; Chief of Police, England, AR &bull; Bryant, AR (lifelong Saline Co.)</div>
+
+      <div class="accordion">
+        <div class="accordion-header">Biography</div>
+        <div class="accordion-body">
+          <p>Lifelong Saline County resident with ~28&ndash;30 years of law enforcement and military experience spanning local, state, and federal levels. Started as a jailer at the Saline County Sheriff's Office in 1996. Served with Arkansas Highway Police, NCIS (federal investigator), and as a municipal police chief. U.S. Army Sergeant First Class (retired 2023). Family in Saline County 100+ years.</p>
+          <p style="margin-top:0.5rem; font-size:0.82rem; color:var(--text-muted);">Married to Tammy. Active member of Church at Rock Creek, Little Rock.</p>
+          <p style="margin-top:0.3rem; font-size:0.78rem;"><a href="https://www.friendforsheriff.com/">Campaign website</a> &bull; <a href="https://www.mysaline.com/2026-robert-friend-for-sheriff/">MySaline announcement</a></p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1rem;">Top Priorities</h3>
+      <ol style="padding-left:1.2rem;">
+        <li><strong>Animal control plan</strong> &mdash; specific facility proposal (inmate-run) <small>(<a href="https://www.bentoncourier.com/news/friend-hosts-town-hall-outlines-goals-in-saline-county-sheriff-bid/article_986b84c3-d782-4602-a963-403ca99c186d.html">Benton Courier</a>)</small></li>
+        <li><strong>Drug enforcement + treatment</strong> &mdash; break the cycle of addiction <small>(<a href="https://katv.com/news/local/saline-county-sheriff-race-heats-up-as-march-3-primary-nears-early-voting-breaks-record">KATV</a>)</small></li>
+        <li><strong>Transparency &amp; fiscal responsibility</strong> &mdash; budget freeze, public postings, no PAC money <small>(<a href="https://www.friendforsheriff.com/">Campaign site</a>)</small></li>
+      </ol>
+
+      <h3 style="margin-top:1rem;">Record Highlights</h3>
+      <ul>
+        <li>Started at <strong>Saline County SO</strong> (1996) &mdash; knows agency from entry level</li>
+        <li><strong>Federal investigator, NCIS</strong></li>
+        <li><strong>Drug Recognition Expert</strong>, AR Highway Police</li>
+        <li>Currently <strong>Chief of Police</strong>, City of England</li>
+        <li><strong>U.S. Army SFC</strong> (retired 2023); served Army &amp; Navy</li>
+        <li>Training: <strong>FLETC, DEA, FBI, Blackwater, Army Senior Leadership</strong></li>
+        <li>Posted own <strong>NCIS &amp; AR State Police files</strong> on campaign website</li>
+      </ul>
+
+      <h3 style="margin-top:1rem;">Endorsements</h3>
+      <div>
+        <span class="badge badge-gray">No formal organizational endorsements</span>
+      </div>
+      <p style="font-size:0.8rem; margin-top:0.4rem; color:var(--text-muted);">Features 7 community video testimonials on website. Frames independence from establishment as a strength: <em>"I answer to you &mdash; not PACs or outside interests."</em></p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== COMPARE ==================== -->
+<div class="tab-content" id="compare">
+
+  <div class="card">
+    <h2>Partisan Framing Scale</h2>
+    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.8rem;">Positions rated 1&ndash;7 from Strong Left to Strong Right. Both candidates are Republicans; ratings reflect where each position falls in the national political landscape. A single candidate may rate differently across issues.</p>
+
+    <div class="legend" style="margin-bottom:1.2rem;">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--robertson)"></div> Robertson</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--friend)"></div> Friend</div>
+    </div>
+
+    <!-- Scale rows -->
+    <div id="scale-chart"></div>
+
+    <div style="margin-top:1rem;" class="callout callout-info">
+      <strong>Key takeaway:</strong> Robertson's positions cluster in the 5&ndash;6 range (institutionalist center-right). Friend spans 3&ndash;7 &mdash; his rehabilitation stance (3) crosses partisan lines, while his fiscal populism (7) aligns with the populist-conservative wing.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Issue-by-Issue Comparison</h2>
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th style="width:16%">Issue</th>
+          <th style="width:42%; color:var(--robertson);">Robertson</th>
+          <th style="width:42%; color:var(--friend);">Friend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Drug Enforcement</strong></td>
+          <td class="col-robertson">Expand narcotics division <span class="badge badge-gray">Scale: 6</span></td>
+          <td class="col-friend">Enforcement + treatment/rehab to break cycle; "education is always cheaper than incarceration" <span class="badge badge-gray">Scale: 4</span></td>
+        </tr>
+        <tr>
+          <td><strong>Animal Control</strong></td>
+          <td class="col-robertson">Support developing ordinance; owner-responsibility framing <span class="badge badge-gray">Scale: 5</span></td>
+          <td class="col-friend">Specific facility proposal (inmate-run, donated materials); "indecision is a decision" <span class="badge badge-gray">Scale: 4</span></td>
+        </tr>
+        <tr>
+          <td><strong>Staffing</strong></td>
+          <td class="col-robertson">Add deputies; preserve administration &mdash; "major changes don't have to be made" <span class="badge badge-gray">Scale: 5</span></td>
+          <td class="col-friend">Cut administration, add street deputies &mdash; "too top heavy" <span class="badge badge-gray">Scale: 6</span></td>
+        </tr>
+        <tr>
+          <td><strong>Jail Operations</strong></td>
+          <td class="col-robertson">Continue compliance-focused approach; currently oversees jail <span class="badge badge-gray">Scale: 5</span></td>
+          <td class="col-friend">K-9 contraband detection; manage federal/local beds; oppose early releases; started career as jailer <span class="badge badge-gray">Scale: 6</span></td>
+        </tr>
+        <tr>
+          <td><strong>Fiscal Approach</strong></td>
+          <td class="col-robertson">Maintain trajectory; never asked quorum court for extra funding <span class="badge badge-gray">Scale: 6</span></td>
+          <td class="col-friend">Budget freeze; post all transactions publicly; zero PAC money <span class="badge badge-gray">Scale: 7</span></td>
+        </tr>
+        <tr>
+          <td><strong>Transparency</strong></td>
+          <td class="col-robertson">Reactive: responds to FOIA requests (1,500+, zero litigation) <span class="badge badge-gray">Scale: 5</span></td>
+          <td class="col-friend">Proactive: publishes records preemptively (personnel files, financials, cold cases) <span class="badge badge-gray">Scale: 5</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Experience Comparison</h2>
+    <table class="cmp-table">
+      <thead>
+        <tr><th>Dimension</th><th style="color:var(--robertson);">Robertson</th><th style="color:var(--friend);">Friend</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Total LE Years</strong></td><td class="col-robertson">~35</td><td class="col-friend">~28&ndash;30</td></tr>
+        <tr><td><strong>Agencies Served</strong></td><td class="col-robertson">2 (LRPD, SCSO)</td><td class="col-friend">5+ (SCSO, AR Highway Police, NCIS, Shannon Hills, England)</td></tr>
+        <tr><td><strong>Highest Rank</strong></td><td class="col-robertson">Major (LRPD)</td><td class="col-friend">SFC (Army); Chief of Police</td></tr>
+        <tr><td><strong>Executive Command</strong></td><td class="col-robertson">18 years at LRPD; 4 years Chief Deputy SCSO</td><td class="col-friend">Chief of Police (current); Acting Chief; federal investigator</td></tr>
+        <tr><td><strong>Current SC Role</strong></td><td class="col-robertson">Chief Deputy &mdash; runs daily operations</td><td class="col-friend">None (police chief in Lonoke Co.)</td></tr>
+        <tr><td><strong>Military Service</strong></td><td class="col-robertson">None reported</td><td class="col-friend">Army SFC (ret. 2023); Navy</td></tr>
+        <tr><td><strong>Federal Experience</strong></td><td class="col-robertson">None reported</td><td class="col-friend">NCIS investigator</td></tr>
+        <tr><td><strong>Jail Management</strong></td><td class="col-robertson">Currently oversees jail as Chief Deputy</td><td class="col-friend">Started career as jailer; claims "only candidate who has run a jail"</td></tr>
+        <tr><td><strong>Specialized Training</strong></td><td class="col-robertson">FBI National Academy</td><td class="col-friend">FLETC, DEA Clandestine Lab, FBI Crime Scene, Blackwater, Army Senior Leadership</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-info" style="margin-top:1rem;">
+      <strong>Summary:</strong> Robertson brings greater total years and deep large-agency command experience plus current institutional knowledge of the Saline County SO. Friend brings broader multi-agency breadth across local/state/federal levels, military service, and federal credentials. Robertson knows this specific office from the inside; Friend has seen more different systems.
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FUNDING ==================== -->
+<div class="tab-content" id="funding">
+
+  <div class="callout callout-info">
+    <strong>Note:</strong> All figures are from campaign finance disclosures through December 2025 (<a href="https://www.bentoncourier.com/news/financial-disclosures-detail-fundraising-spending-in-saline-county-sheriff-s-race/article_fa3a999a-96ec-424f-a0dd-d948d21999ae.html">Benton Courier, Jan 14, 2026</a>). Pre-runoff filings (due ~March 24, 2026) are not yet publicly accessible.
+  </div>
+
+  <div class="grid-2">
+    <div class="card candidate-card robertson">
+      <div class="candidate-name robertson">Robertson</div>
+      <div style="font-size:2rem; font-weight:700; margin:0.5rem 0;">$26,884</div>
+      <div style="font-size:0.85rem; color:var(--text-muted);">Cash on hand</div>
+      <hr style="margin:1rem 0; border:none; border-top:1px solid var(--border);">
+      <div class="fund-row"><div class="fund-label">Total Raised</div><div class="fund-bars"><div class="fund-bar" style="background:var(--robertson); width:100%;">$39,860</div></div></div>
+      <div class="fund-row"><div class="fund-label">Individual</div><div class="fund-bars"><div class="fund-bar" style="background:var(--robertson); width:87%;">$34,860</div></div></div>
+      <div class="fund-row"><div class="fund-label">PAC</div><div class="fund-bars"><div class="fund-bar" style="background:var(--robertson); width:13%;">$5,000</div></div></div>
+      <div class="fund-row"><div class="fund-label">Total Spent</div><div class="fund-bars"><div class="fund-bar" style="background:#94a3b8; width:33%;">$12,976</div></div></div>
+      <h3 style="margin-top:1rem;">Top Donors</h3>
+      <ul>
+        <li>Keeley Selby &mdash; $3,500</li>
+        <li>Saline County GOP PAC &mdash; $3,500</li>
+      </ul>
+      <h3 style="margin-top:0.8rem;">Spending Focus</h3>
+      <p style="font-size:0.85rem;">Yard signs ($3,472), Capitol Consulting ($2,400), community event booths (Salt Bowl, Bryant Fall Fest, Benton Old Fashioned Day, Bauxite Hall of Fame).</p>
+    </div>
+
+    <div class="card candidate-card friend">
+      <div class="candidate-name friend">Friend</div>
+      <div style="font-size:2rem; font-weight:700; margin:0.5rem 0;">$8,162</div>
+      <div style="font-size:0.85rem; color:var(--text-muted);">Cash on hand</div>
+      <hr style="margin:1rem 0; border:none; border-top:1px solid var(--border);">
+      <div class="fund-row"><div class="fund-label">Total Raised</div><div class="fund-bars"><div class="fund-bar" style="background:var(--friend); width:76%;">$30,450</div></div></div>
+      <div class="fund-row"><div class="fund-label">Individual</div><div class="fund-bars"><div class="fund-bar" style="background:var(--friend); width:76%;">$30,450</div></div></div>
+      <div class="fund-row"><div class="fund-label">PAC</div><div class="fund-bars"><div class="fund-bar" style="background:var(--friend); width:0%; min-width:40px;">$0</div></div></div>
+      <div class="fund-row"><div class="fund-label">Total Spent</div><div class="fund-bars"><div class="fund-bar" style="background:#94a3b8; width:71%;">$28,114</div></div></div>
+      <div class="fund-row"><div class="fund-label">In-Kind</div><div class="fund-bars"><div class="fund-bar" style="background:#d4a574; width:15%;">$6,150</div></div></div>
+      <h3 style="margin-top:1rem;">Top Donors</h3>
+      <ul>
+        <li>John Holleman &mdash; $3,500</li>
+        <li>Deborah Felton &mdash; $3,500</li>
+        <li>Larry Davis &mdash; $3,500</li>
+        <li>Jerry Odom &mdash; $3,000</li>
+      </ul>
+      <h3 style="margin-top:0.8rem;">Spending Focus</h3>
+      <p style="font-size:0.85rem;">DNT Media digital/social ads ($18,500+), radio ads ($2,581), fundraising costs ($2,753). Heavy investment in paid advertising.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Key Financial Takeaways</h2>
+    <ul>
+      <li>Robertson enters the runoff with a <strong>3.3x cash-on-hand advantage</strong> ($26,884 vs $8,162).</li>
+      <li>Friend <strong>spent more aggressively</strong> pre-primary ($28K vs $13K), investing heavily in digital and radio ads.</li>
+      <li>Robertson received <strong>$5,000 in PAC money</strong>; Friend accepted <strong>zero PAC contributions</strong> and makes this a campaign talking point.</li>
+      <li>Both candidates' top individual donors gave <strong>$3,500</strong> (the maximum).</li>
+      <li>Friend's in-kind contributions ($6,150) were primarily <strong>billboard and signage</strong>.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== CONTROVERSIES ==================== -->
+<div class="tab-content" id="controversies">
+
+  <div class="callout callout-red">
+    <strong>Important:</strong> This section distinguishes <em>allegations</em> from <em>findings</em>. No findings of fact have been made in any active case. Voters should weigh unresolved claims carefully and consider the source of each allegation.
+  </div>
+
+  <div class="card">
+    <h2>Defamation Lawsuit Timeline</h2>
+    <p style="font-size:0.85rem; margin-bottom:1rem;">Friend filed suit; Robertson is <strong>not named</strong> but two defendants are connected to him.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">January 20, 2026</div>
+        <div class="timeline-text">Rick Cross (Robertson's brother-in-law) publishes letter on MySaline questioning Friend's handling of "Boys on the Tracks" case evidence.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">February 3, 2026</div>
+        <div class="timeline-text">Carl S. publishes rebuttal letter defending Friend, accusing Cross of deliberately omitting exculpatory documents.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Before March 3 (early voting)</div>
+        <div class="timeline-text">Kevin Cooper posts 50+ minute Facebook video alleging Friend dismissed charges for sexual favors, stole property, and abused authority. Rick Cross posts claiming two protective orders existed against Friend.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">March 3, 2026</div>
+        <div class="timeline-text">Primary election. Robertson finishes first (37.3%), Friend second (32.9%). Runoff triggered.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">March 10, 2026</div>
+        <div class="timeline-text"><strong>Friend files defamation lawsuit</strong> in Saline County Circuit Court against Rick Cross, Kevin Cooper, and 5 John Does. Seeks $750,000+ in damages. Claims: defamation, false light invasion of privacy, tortious interference.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">March 18, 2026</div>
+        <div class="timeline-text">Cooper's attorney (Clint Lancaster) files motion to dismiss, arguing free speech and truth defense. Cross partially retracts claim about two protective orders — records show only one existed (filed 2014 by Friend's wife, dismissed for insufficient evidence).</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">March 26, 2026</div>
+        <div class="timeline-text"><strong>Judge Brent Houston strikes Cooper's motion</strong> in its entirety, citing "name-calling" violations of Arkansas law in the filing. Threatens contempt if repeated.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Mid-April 2026</div>
+        <div class="timeline-text">Deadline for Cross and remaining defendants to respond.</div>
+      </div>
+    </div>
+    <div class="context-note">
+      <strong>Attorney conflict:</strong> Friend's attorney (Jennifer Lancaster) and Cooper's attorney (Clint Lancaster) are concurrently divorcing each other (filed Aug 2025, hearings scheduled Aug 2026). All Saline County judges have recused from their divorce case.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Individual Controversies</h2>
+
+    <div class="controversy-card">
+      <h4>Social Media Allegations Against Friend</h4>
+      <span class="controversy-status status-pending">Pending &mdash; Active Lawsuit</span>
+      <p style="font-size:0.85rem; margin-top:0.5rem;">Cooper alleges Friend engaged in criminal conduct and professional misconduct. Cooper asserts the statements are true and that Friend bragged about the conduct to colleagues. Friend asserts the claims are fabricated and filed a $750K+ defamation suit. <strong>No findings of fact have been made.</strong></p>
+      <div class="context-note">Cooper is a Robertson supporter; Cross is Robertson's brother-in-law. Robertson states Cross "acted independently" and is not named in the suit. The timing (just before early voting) is relevant context for evaluating motivation.</div>
+      <p style="font-size:0.78rem; margin-top:0.4rem;"><a href="https://arktimes.com/arkansas-blog/2026/03/17/saline-county-sheriff-hopeful-sues-over-lurid-facebook-accusations">Arkansas Times</a> &bull; <a href="https://katv.com/news/local/sheriff-runoff-in-saline-county-heats-up-as-candidate-richard-friend-files-defamation-suit">KATV</a> &bull; <a href="https://www.mysaline.com/friend-vs-cross-cooper-et-al/">MySaline</a></p>
+    </div>
+
+    <div class="controversy-card">
+      <h4>Boys on the Tracks Evidence Handling</h4>
+      <span class="controversy-status status-pending">Under Review</span>
+      <p style="font-size:0.85rem; margin-top:0.5rem;">Cross raised concerns about Friend's handling of files from the unsolved 1987 Ives/Henry homicide case. Friend described on a podcast finding a state police file in 2004 while acting Shannon Hills police chief, taking materials home, then transferring them. AR Division of LE Standards said it would review. Cross stated he was not alleging criminal wrongdoing but questioning professional judgment.</p>
+      <div class="context-note">This allegation also originated from Rick Cross (Robertson's brother-in-law). A rebuttal letter accused Cross of omitting exculpatory documents. No investigation outcome reported.</div>
+      <p style="font-size:0.78rem; margin-top:0.4rem;"><a href="https://www.mysaline.com/letters-cross-friend-boys-tracks/">MySaline letter (Cross)</a> &bull; <a href="https://www.mysaline.com/letters-carl-friend-020326/">MySaline letter (rebuttal)</a></p>
+    </div>
+
+    <div class="controversy-card">
+      <h4>2014 Protective Order</h4>
+      <span class="controversy-status status-dismissed">Dismissed in 2014</span>
+      <p style="font-size:0.85rem; margin-top:0.5rem;">A protective order was filed against Friend by his wife in 2014 and was dismissed/vacated for insufficient evidence. Cross amplified this on social media, falsely claiming two orders existed. He later retracted the second claim.</p>
+      <p style="font-size:0.78rem; margin-top:0.4rem;"><a href="https://arktimes.com/arkansas-blog/2026/03/17/saline-county-sheriff-hopeful-sues-over-lurid-facebook-accusations">Arkansas Times</a></p>
+    </div>
+
+    <div class="controversy-card">
+      <h4>PAC/Establishment Support Criticism</h4>
+      <span class="controversy-status status-dispute">Campaign Dispute</span>
+      <p style="font-size:0.85rem; margin-top:0.5rem;">Friend accused County Judge Brumley and political groups of "unprecedented" moves in backing Robertson during a primary, citing the Saline County GOP PAC's $3,500 contribution. This is a political dispute with no formal complaint filed.</p>
+      <p style="font-size:0.78rem; margin-top:0.4rem;"><a href="https://www.bentoncourier.com/news/friend-accuses-brumley-political-groups-of-unprecedented-moves-in-saline-county-sheriff-race/article_d045c779-afcd-46df-bb6f-ccd60855e58b.html">Benton Courier</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SOURCES ==================== -->
+<div class="tab-content" id="sources">
+
+  <div class="card">
+    <h2>Sources &mdash; Dustin Robertson</h2>
+    <table class="src-table">
+      <thead><tr><th>Source</th><th>Type</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://dustinrobertsonforsheriff.com/">dustinrobertsonforsheriff.com</a></td><td><span class="src-type">Campaign</span></td><td>Accessed Mar 2026</td></tr>
+        <tr><td><a href="https://www.mysaline.com/2026-elections-campaign-dustin-robertson-for-sheriff/">MySaline &mdash; Campaign announcement</a></td><td><span class="src-type">News</span></td><td>Jan 13, 2025</td></tr>
+        <tr><td><a href="https://ballotpedia.org/Dustin_Robertson_(Saline_County_Sheriff,_Arkansas,_candidate_2026)">Ballotpedia &mdash; Robertson profile</a></td><td><span class="src-type">Reference</span></td><td>Accessed Mar 2026</td></tr>
+        <tr><td><a href="https://www.thv11.com/article/news/local/saline-county-sheriff-candidates/91-6be87e70-5aab-4559-b074-0bf9e0be6571">THV11 &mdash; Four candidates profile</a></td><td><span class="src-type">TV News</span></td><td>Feb 27, 2026</td></tr>
+        <tr><td><a href="https://www.nwaonline.com/news/2026/mar/22/republican-sheriff-candidates-in-saline-white/">NWA Democrat-Gazette &mdash; Runoff preview</a></td><td><span class="src-type">Newspaper</span></td><td>Mar 22, 2026</td></tr>
+        <tr><td><a href="https://katv.com/news/local/saline-county-sheriff-race-heats-up-as-march-3-primary-nears-early-voting-breaks-record">KATV &mdash; Race heats up</a></td><td><span class="src-type">TV News</span></td><td>Feb 2026</td></tr>
+        <tr><td><a href="https://www.bentoncourier.com/news/financial-disclosures-detail-fundraising-spending-in-saline-county-sheriff-s-race/article_fa3a999a-96ec-424f-a0dd-d948d21999ae.html">Benton Courier &mdash; Campaign finance</a></td><td><span class="src-type">Newspaper</span></td><td>Jan 14, 2026</td></tr>
+        <tr><td><a href="https://www.bentoncourier.com/news/robertson-friend-headed-to-sheriff-s-runoff-as-saline-county-reports-final-election-results/article_1f2bbc20-d258-4d31-91c3-38edf1098fe0.html">Benton Courier &mdash; Primary results</a></td><td><span class="src-type">Newspaper</span></td><td>Mar 2026</td></tr>
+        <tr><td><a href="https://www.bentoncourier.com/news/sheriff-s-candidates-address-allegations-policy-questions-during-debate/article_29196acb-9d22-4375-9307-09b990fc6893.html">Benton Courier &mdash; Debate coverage</a></td><td><span class="src-type">Newspaper</span></td><td>2026</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Sources &mdash; Richard Friend</h2>
+    <table class="src-table">
+      <thead><tr><th>Source</th><th>Type</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://www.friendforsheriff.com/">friendforsheriff.com</a></td><td><span class="src-type">Campaign</span></td><td>Accessed Mar 2026</td></tr>
+        <tr><td><a href="https://www.mysaline.com/2026-robert-friend-for-sheriff/">MySaline &mdash; Campaign announcement</a></td><td><span class="src-type">News</span></td><td>Jul 1, 2025</td></tr>
+        <tr><td><a href="https://www.bentoncourier.com/news/friend-hosts-town-hall-outlines-goals-in-saline-county-sheriff-bid/article_986b84c3-d782-4602-a963-403ca99c186d.html">Benton Courier &mdash; Town hall coverage</a></td><td><span class="src-type">Newspaper</span></td><td>Oct 30, 2025</td></tr>
+        <tr><td><a href="https://www.thv11.com/article/news/local/saline-county-sheriff-candidates/91-6be87e70-5aab-4559-b074-0bf9e0be6571">THV11 &mdash; Four candidates profile</a></td><td><span class="src-type">TV News</span></td><td>Feb 27, 2026</td></tr>
+        <tr><td><a href="https://www.nwaonline.com/news/2026/mar/22/republican-sheriff-candidates-in-saline-white/">NWA Democrat-Gazette &mdash; Runoff preview</a></td><td><span class="src-type">Newspaper</span></td><td>Mar 22, 2026</td></tr>
+        <tr><td><a href="https://katv.com/news/local/saline-county-sheriff-race-heats-up-as-march-3-primary-nears-early-voting-breaks-record">KATV &mdash; Race heats up</a></td><td><span class="src-type">TV News</span></td><td>Feb 2026</td></tr>
+        <tr><td><a href="https://katv.com/news/local/sheriff-runoff-in-saline-county-heats-up-as-candidate-richard-friend-files-defamation-suit">KATV &mdash; Defamation suit</a></td><td><span class="src-type">TV News</span></td><td>Mar 2026</td></tr>
+        <tr><td><a href="https://arktimes.com/arkansas-blog/2026/03/17/saline-county-sheriff-hopeful-sues-over-lurid-facebook-accusations">Arkansas Times &mdash; Facebook accusations</a></td><td><span class="src-type">News</span></td><td>Mar 17, 2026</td></tr>
+        <tr><td><a href="https://www.fox16.com/news/arkansas-courts/judge-issues-order-in-saline-county-sheriffs-race-defamation-suit-cites-name-calling/">Fox16 &mdash; Judge's order</a></td><td><span class="src-type">TV News</span></td><td>Mar 26, 2026</td></tr>
+        <tr><td><a href="https://www.mysaline.com/friend-vs-cross-cooper-et-al/">MySaline &mdash; Lawsuit developments</a></td><td><span class="src-type">News</span></td><td>Mar 18, 2026</td></tr>
+        <tr><td><a href="https://www.mysaline.com/letters-cross-friend-boys-tracks/">MySaline &mdash; Letter (Cross/Boys on Tracks)</a></td><td><span class="src-type">Letters</span></td><td>Jan 20, 2026</td></tr>
+        <tr><td><a href="https://www.mysaline.com/letters-carl-friend-020326/">MySaline &mdash; Letter (Carl S. rebuttal)</a></td><td><span class="src-type">Letters</span></td><td>Feb 3, 2026</td></tr>
+        <tr><td><a href="https://www.bentoncourier.com/news/financial-disclosures-detail-fundraising-spending-in-saline-county-sheriff-s-race/article_fa3a999a-96ec-424f-a0dd-d948d21999ae.html">Benton Courier &mdash; Campaign finance</a></td><td><span class="src-type">Newspaper</span></td><td>Jan 14, 2026</td></tr>
+        <tr><td><a href="https://www.bentoncourier.com/news/friend-accuses-brumley-political-groups-of-unprecedented-moves-in-saline-county-sheriff-race/article_d045c779-afcd-46df-bb6f-ccd60855e58b.html">Benton Courier &mdash; Friend vs. Brumley</a></td><td><span class="src-type">Newspaper</span></td><td>2026</td></tr>
+        <tr><td><a href="https://facebook.com/friendforsheriff">Facebook &mdash; @friendforsheriff</a></td><td><span class="src-type">Social Media</span></td><td>Accessed Mar 2026</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Sources &mdash; General</h2>
+    <table class="src-table">
+      <thead><tr><th>Source</th><th>Type</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://salinecounty.org/news_detail_T11_R59.php">Saline County &mdash; Election info</a></td><td><span class="src-type">Government</span></td><td>Mar 2026</td></tr>
+        <tr><td><a href="https://www.mysaline.com/2026-elections-primary-runoff/">MySaline &mdash; Runoff voting info</a></td><td><span class="src-type">News</span></td><td>Mar 2026</td></tr>
+        <tr><td><a href="https://www.bentoncourier.com/news/open-sheriff-s-race-highlights-busy-2026-primary-ballot-in-saline-county/article_35f6e034-12c6-4555-838f-f4f5c3e50921.html">Benton Courier &mdash; Open race preview</a></td><td><span class="src-type">Newspaper</span></td><td>2026</td></tr>
+        <tr><td><a href="https://arkansasadvocate.com/2026/03/23/voters-in-6-arkansas-legislative-districts-choosing-party-nominees-in-runoffs/">Arkansas Advocate &mdash; Runoff overview</a></td><td><span class="src-type">News</span></td><td>Mar 23, 2026</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<div class="disclaimer">
+  This guide is nonpartisan and does not endorse any candidate. All factual claims are sourced.<br>
+  Prepared March 28, 2026 using the <a href="#">Election Expert Prompt</a> framework.<br>
+  Voters are encouraged to verify information and consult primary sources before casting their vote.
+</div>
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Accordion toggle
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    header.parentElement.classList.toggle('open');
+  });
+});
+
+// Partisan Scale Chart
+const scaleData = [
+  { issue: 'Drug Enforcement', robertson: 6, friend: 4, rDetail: 'Expand narcotics division', fDetail: 'Enforcement + treatment/rehab' },
+  { issue: 'Animal Control', robertson: 5, friend: 4, rDetail: 'Support ordinance; owner responsibility', fDetail: 'Specific facility proposal (inmate-run)' },
+  { issue: 'Staffing', robertson: 5, friend: 6, rDetail: 'Preserve current structure', fDetail: 'Cut admin, add street deputies' },
+  { issue: 'Jail Operations', robertson: 5, friend: 6, rDetail: 'Continue compliance approach', fDetail: 'K-9, manage fed/local beds' },
+  { issue: 'Fiscal Approach', robertson: 6, friend: 7, rDetail: 'Maintain trajectory', fDetail: 'Budget freeze; zero PAC money' },
+  { issue: 'Transparency', robertson: 5, friend: 5, rDetail: 'Reactive (FOIA-based)', fDetail: 'Proactive (publish preemptively)' },
+  { issue: 'Crime Prevention', robertson: 5, friend: 5, rDetail: 'Grow with county', fDetail: 'Proactive; federal networks' },
+  { issue: 'Recidivism', robertson: null, friend: 3, rDetail: '(No specific position)', fDetail: 'Treatment, GED programs in jail' },
+  { issue: 'Sex Offender', robertson: null, friend: 6, rDetail: '(No specific position)', fDetail: 'Deputy home compliance checks' },
+];
+
+const scaleLabels = ['1-Strong Left', '2', '3', '4-Center', '5', '6', '7-Strong Right'];
+const scaleColors = ['#1565c0','#42a5f5','#80cbc4','#9e9e9e','#e6a57a','#e57373','#c62828'];
+
+function getScalePercent(val) { return ((val - 1) / 6) * 100; }
+
+const chartEl = document.getElementById('scale-chart');
+scaleData.forEach(d => {
+  const row = document.createElement('div');
+  row.style.cssText = 'margin-bottom:1.4rem; padding-bottom:1rem; border-bottom:1px solid #f0f0f0;';
+
+  let dotsHTML = '';
+  if (d.robertson !== null) {
+    dotsHTML += `<div class="scale-dot robertson" style="left:${getScalePercent(d.robertson)}%" title="Robertson: ${d.robertson}"></div>`;
+  }
+  if (d.friend !== null) {
+    dotsHTML += `<div class="scale-dot friend" style="left:${getScalePercent(d.friend)}%" title="Friend: ${d.friend}"></div>`;
+  }
+
+  row.innerHTML = `
+    <div style="font-weight:600; font-size:0.9rem; margin-bottom:0.4rem;">${d.issue}</div>
+    <div class="scale-container">
+      <div class="scale-bg">${dotsHTML}</div>
+      <div class="scale-labels">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+      </div>
+    </div>
+    <div style="display:flex; gap:1.5rem; margin-top:0.4rem; font-size:0.78rem;">
+      <div style="color:var(--robertson);">${d.robertson !== null ? `<strong>R:</strong> ${d.rDetail} (${d.robertson})` : `<span style="color:#aaa">${d.rDetail}</span>`}</div>
+      <div style="color:var(--friend);">${d.friend !== null ? `<strong>F:</strong> ${d.fDetail} (${d.friend})` : ''}</div>
+    </div>
+  `;
+  chartEl.appendChild(row);
+});
+</script>
+
+</body>
+</html>
